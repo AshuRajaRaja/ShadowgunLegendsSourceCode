@@ -1,0 +1,38 @@
+gg-- Import necessary libraries
+local GG = require("gg")
+
+gg-- Unlimited Health
+local timer = GG.createTimer(GG.getMainForm())
+timer.Interval = 100
+timer.onTimer = function ()
+    local health_address = findHealthAddress()
+    GG.writeInteger(health_address, max_health_value)
+end
+
+gg-- Fast Speed
+function setPlayerSpeed(multiplier)
+    local speed_address = findSpeedAddress()
+    GG.writeFloat(speed_address, base_speed * multiplier)
+end
+
+gg-- Very High Damage
+function increaseDamage(multiplier)
+    local damage_address = findWeaponDamageAddress()
+    GG.writeInteger(damage_address, base_damage * multiplier)
+end
+
+gg-- Fly Function
+function flyToggle(active)
+    local flags_address = findPlayerFlagsAddress()
+    if active then
+        GG.writeByte(flags_address, fly_enabled_flag)
+    else
+        GG.writeByte(flags_address, normal_flag)
+    end
+end
+
+gg-- Wall Hack (Shooting Outside Wall)
+function enableWallHack()
+    local wall_collision_address = findWallCollisionAddress()
+    GG.writeByte(wall_collision_address, wallhack_enabled_flag)
+end
